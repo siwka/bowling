@@ -15,7 +15,7 @@ module Bowling
 		end
 
 		def spare?
-			!strike? &&  score == 10
+			!strike? && score == 10
 		end
 
 	end

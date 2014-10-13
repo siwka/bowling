@@ -70,5 +70,25 @@ describe "game" do
 		@frames3.roll[1] = 2		
 		@game.frames << @frames1 << @frames2 << @frames3
 		expect(@game.score).to eq(46)
+	end
+
+	it "should not have more then 10 frames (if no spike was last frame or strike in last two frames " do
+
+	end
+
+	it "should have 11 frames if 10th was spike" do
+
+	end
+	
+	it "should have 11 frames if 10th frame was strike but 9th was not a strike" do
+
+	end
+
+	it "should have 12 frames if last two (9 & 10) frames were strikes" do
+
+	end
+
+	it "should have 12 frames if 10th and 11th frames were strikes" do
+
 	end	
 end
