@@ -1,0 +1,4 @@
+require_relative '../lib/game'
+require_relative '../lib/frames'
+ 
+require 'yaml'
