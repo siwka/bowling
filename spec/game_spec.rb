@@ -72,7 +72,7 @@ describe "game" do
 		expect(@game.score).to eq(46)
 	end
 
-	it "should not have more then 10 frames (if no spike was last frame or strike in last two frames " do
+	it "should not have more then 10 frames (if no spike in last frame or strike in last two frames " do
 
 	end
 

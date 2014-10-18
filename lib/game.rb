@@ -1,4 +1,5 @@
 module Bowling
+	require 'pry'
 
 	class Game
 		attr_accessor :frames
@@ -9,31 +10,31 @@ module Bowling
 
 		def score
 			frames_scores = []
-			bonus = 0
 			@frames.each_with_index do |frame, index|
-				frames_scores << frame.score
-				bonus = add_bonus(index, bonus)
+				 bonus = add_bonus(index)
+				 frames_scores << frame.score + bonus 
 			end
-			frames_scores.reduce(:+) + bonus
+			frames_scores.reduce(:+)
+		end
+
+		def add_bonus(index)
+			frame = @frames[index]
+			if frame.strike?
+				two_extra_balls(index)
+			elsif frame.spare?
+				one_extra_ball(index)
+			else
+				0
+			end
 		end
 
 		def two_extra_balls(index)
-			bonus = @frames[index + 1].strike? ? @frames[index + 2].roll[0] : 0
-			bonus += @frames[index + 1].score
+			bonus = @frames[index + 1].score
+			bonus += @frames[index + 1].strike? ? @frames[index + 2].roll[0] : 0
 		end
 
 		def one_extra_ball(index)
 			@frames[index + 1].roll[0]
 		end
-
-		def add_bonus(index, bonus)
-			frame = @frames[index]
-			if frame.strike?
-				bonus += two_extra_balls(index)
-			elsif frame.spare?
-				bonus += one_extra_ball(index)
-			end
-			bonus
-		end	
 	end
 end

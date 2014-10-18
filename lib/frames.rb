@@ -1,6 +1,6 @@
 module Bowling
 	class Frames
-	  attr_accessor :roll, :score, :strike, :spare
+	  attr_reader :strike, :spare, :score, :roll
 
 		def initialize
 			@roll = []
