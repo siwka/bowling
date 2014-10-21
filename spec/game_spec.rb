@@ -48,6 +48,7 @@ describe "game" do
 		@game.frames << @frames1 << @frames2
 		expect(@game.score).to eq(24)
 	end
+
 	it "should add to total score bonuses if spare was scored twice in a row" do
 		@frames1.roll[0] = 7
 		@frames1.roll[1] = 3
@@ -72,23 +73,60 @@ describe "game" do
 		expect(@game.score).to eq(46)
 	end
 
-	it "should not have more then 10 frames (if no spike in last frame or strike in last two frames " do
+	describe "full length frames" do
 
+		it "should return score 60 on [[3,3],[3,3],[3,3],[3,3],[3,3],[3,3],[3,3],[3,3],[3,3],[3,3]]" do
+			arr = [[3,3],[3,3],[3,3],[3,3],[3,3],[3,3],[3,3],[3,3],[3,3],[3,3]]
+			set_game(arr)
+			expect(@game.score).to eq(60)
+		end
+
+		it "should return score 22 on [[6,4],[5,2],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]]" do
+			arr = [[6,4],[5,2],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]]
+			set_game(arr)
+			expect(@game.score).to eq(22)
+		end
+
+		it "should return score 300 on [[10,0],[10,0],[10,0],[10,0],[10,0],[10,0],[10,0],[10,0],[10,0],[10,0],[10,0],[10,0]]" do
+			arr = [[10,0],[10,0],[10,0],[10,0],[10,0],[10,0],[10,0],[10,0],[10,0],[10,0],[10,0],[10,0]]
+			set_game(arr)
+			expect(@game.score).to eq(300)
+		end
+
+		it "should return score 200 on [[10,0],[5,5],[10,0],[5,5],[10,0],[5,5],[10,0],[5,5],[10,0],[5,5],[10,0]]" do
+			arr = [[10,0],[5,5],[10,0],[5,5],[10,0],[5,5],[10,0],[5,5],[10,0],[5,5],[10,0]]
+			set_game(arr)
+			expect(@game.score).to eq(200)
+		end
+
+		it "should return score 200 on [[5,5],[10,0],[5,5],[10,0],[5,5],[10,0],[5,5],[10,0],[5,5],[10,0],[5,5]]" do
+			arr = [[5,5],[10,0],[5,5],[10,0],[5,5],[10,0],[5,5],[10,0],[5,5],[10,0],[5,5]]
+			set_game(arr)
+			expect(@game.score).to eq(200)
+		end
+
+		it "should return score 20 on [[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[10,0],[5,5]]" do
+			arr = [[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[10,0],[5,5]]
+			set_game(arr)
+			expect(@game.score).to eq(20)
+		end
+
+	it "should return score 40 on [[0,0],[0,10],[3,4],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[10,0],[5,5]]" do
+			arr = [[0,0],[0,10],[3,4],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[10,0],[5,5]]
+			set_game(arr)
+			expect(@game.score).to eq(40)
+		end
 	end
 
-	it "should have 11 frames if 10th was spike" do
-
+	def set_game(arr)
+		index = -1
+		arr.length.times do |frames|
+			index += 1
+			frames = "frames + #{index}"
+			@frames = Bowling::Frames.new
+			@frames.roll[0] = arr[index][0]
+			@frames.roll[1] = arr[index][1]
+			@game.frames << @frames
+		end
 	end
-	
-	it "should have 11 frames if 10th frame was strike but 9th was not a strike" do
-
-	end
-
-	it "should have 12 frames if last two (9 & 10) frames were strikes" do
-
-	end
-
-	it "should have 12 frames if 10th and 11th frames were strikes" do
-
-	end	
 end

@@ -11,8 +11,9 @@ module Bowling
 		def score
 			frames_scores = []
 			@frames.each_with_index do |frame, index|
-				 bonus = add_bonus(index)
-				 frames_scores << frame.score + bonus 
+					bonus = add_bonus(index) if index < 9
+					bonus ||= 0
+					frames_scores << frame.score + bonus
 			end
 			frames_scores.reduce(:+)
 		end
@@ -29,8 +30,8 @@ module Bowling
 		end
 
 		def two_extra_balls(index)
-			bonus = @frames[index + 1].score
-			bonus += @frames[index + 1].strike? ? @frames[index + 2].roll[0] : 0
+				bonus = @frames[index + 1].score
+				bonus += @frames[index + 1].strike? ? @frames[index + 2].roll[0] : 0
 		end
 
 		def one_extra_ball(index)
